@@ -38,6 +38,13 @@ module.exports = {
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
         }
+      },
+      [process.env.VUE_APP_FLOWABLE_API]: {
+        target: `http://192.168.0.100:8080`,
+        changeOrigin: true,
+        pathRewrite: {
+          ['^' + process.env.VUE_APP_FLOWABLE_API]: ''
+        }
       }
     },
     disableHostCheck: true
