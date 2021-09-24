@@ -35,13 +35,15 @@ module.exports = {
       [process.env.VUE_APP_BASE_API]: {
         target: `http://localhost:9000`,
         changeOrigin: true,
+        logLevel: 'debug',
         pathRewrite: {
           ['^' + process.env.VUE_APP_BASE_API]: ''
         }
       },
       [process.env.VUE_APP_FLOWABLE_API]: {
-        target: `http://192.168.0.100:8080`,
+        target: `http://admin:test@192.168.0.100:8080`,
         changeOrigin: true,
+        logLevel: 'debug',
         pathRewrite: {
           ['^' + process.env.VUE_APP_FLOWABLE_API]: ''
         }

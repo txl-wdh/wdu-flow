@@ -4,7 +4,7 @@ import request from '@/utils/request-flowable'
 export function list(query) {
   return request({
     url: '/flowable-rest/service/query/tasks',
-    method: 'get',
+    method: 'post',
     params: query
   })
 }

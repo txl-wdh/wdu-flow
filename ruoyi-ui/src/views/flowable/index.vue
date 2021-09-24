@@ -232,7 +232,8 @@ export default {
         title: undefined,
         operName: undefined,
         businessType: undefined,
-        status: undefined
+        status: undefined,
+        assignee: 'zhanghang'
       }
     };
   },
