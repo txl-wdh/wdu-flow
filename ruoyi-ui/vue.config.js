@@ -41,7 +41,7 @@ module.exports = {
         }
       },
       [process.env.VUE_APP_FLOWABLE_API]: {
-        target: `http://admin:test@192.168.0.100:8080`,
+        target: `http://192.168.0.100:8080`,
         changeOrigin: true,
         logLevel: 'debug',
         pathRewrite: {

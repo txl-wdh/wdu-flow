@@ -5,7 +5,7 @@ export function list(query) {
   return request({
     url: '/flowable-rest/service/query/tasks',
     method: 'post',
-    params: query
+    data: query
   })
 }
 
