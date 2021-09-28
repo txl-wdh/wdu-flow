@@ -184,6 +184,7 @@
 
 <script>
 import { list, delOperlog, cleanOperlog, exportOperlog } from "@/api/flowable/flowable";
+import { getUserProfile } from "@/api/system/user";
 
 export default {
   name: "Operlog",
@@ -212,6 +213,10 @@ export default {
       defaultSort: {prop: 'operTime', order: 'descending'},
       // 表单参数
       form: {},
+      // 用户
+      user: {},
+      roleGroup: {},
+      postGroup: {},
       // 查询参数
       queryParams: {
         pageNum: 1,
@@ -220,17 +225,19 @@ export default {
         operName: undefined,
         businessType: undefined,
         status: undefined,
-        assignee: 'zhanghang'
+        assignee: undefined
       }
     };
   },
   created() {
+    this.getUser();
     this.getList();
   },
   methods: {
     /** 查询登录日志 */
     getList() {
       this.loading = true;
+      this.queryParams.assignee == this.user.userName;
       list(this.addDateRange(this.queryParams, this.dateRange)).then( response => {
           this.list = response.data;
           this.total = response.total;
@@ -311,6 +318,13 @@ export default {
           this.download(response.msg);
           this.exportLoading = false;
         }).catch(() => {});
+    },
+    getUser() {
+      getUserProfile().then(response => {
+        this.user = response.data;
+        this.roleGroup = response.roleGroup;
+        this.postGroup = response.postGroup;
+      });
     }
   }
 };
