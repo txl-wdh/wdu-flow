@@ -110,6 +110,7 @@
     <el-table ref="tables" v-loading="loading" :data="list" @selection-change="handleSelectionChange" :default-sort="defaultSort" @sort-change="handleSortChange">
       <el-table-column type="selection" width="55" align="center" />
       <el-table-column label="任务名称" align="center" prop="name" />
+      <el-table-column label="任务描述" align="center" prop="description" />
       <el-table-column label="任务人" align="center" prop="assignee" />
       
       <el-table-column label="创建日期" align="center" prop="createTime" sortable="custom" :sort-orders="['descending', 'ascending']" width="180">
@@ -230,15 +231,22 @@ export default {
     };
   },
   created() {
-    this.getUser();
     this.getList();
   },
   methods: {
     /** 查询登录日志 */
-    getList() {
+    async getList() {
       this.loading = true;
-      this.queryParams.assignee == this.user.userName;
-      list(this.addDateRange(this.queryParams, this.dateRange)).then( response => {
+      // 查询用户信息
+      await getUserProfile().then(response => {
+        this.user = response.data;
+        this.queryParams.assignee = response.data.userName;
+        this.roleGroup = response.roleGroup;
+        this.postGroup = response.postGroup;
+      });
+      
+      // 查询待办数据
+      await list(this.addDateRange(this.queryParams, this.dateRange)).then( response => {
           this.list = response.data;
           this.total = response.total;
           this.loading = false;
@@ -320,11 +328,7 @@ export default {
         }).catch(() => {});
     },
     getUser() {
-      getUserProfile().then(response => {
-        this.user = response.data;
-        this.roleGroup = response.roleGroup;
-        this.postGroup = response.postGroup;
-      });
+      
     }
   }
 };
